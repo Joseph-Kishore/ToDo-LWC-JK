@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="ToDo" class="slds-text-align_center">
+        <lightning-layout class="slds-align-absolute-center slds-text-align_center" multiple-rows>
+            <lightning-layout-item size="12">
+                <div class="time">
+                    {time}
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <div class="greeting">
+                    {greeting}
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <p>What should I remind you?</p>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" class="slds-p-around_small">
+                <lightning-layout>
+                    <lightning-layout-item size="11" >
+                        <lightning-input type="text" label="Whats in your mind..." variant="label-hidden"
+                    placeholder="Whats in your mind.." name="toDoItem"></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1">
+                        <lightning-button-icon icon-name="utility:add" alternative-text="Add" title="Add todo" onclick={addTodo}></lightning-button-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            <lightning-layout-item size="12">
+                <template lwc:if={hasItems}>
+                    <p>Here's your list of ToDos</p>
+                </template>
+                <template lwc:else>
+                    <p>You don't have any active tasks</p>
+                </template>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" class="slds-p-around_small">
+                <template for:each={toDoList} for:item="toDo">
+                    <lightning-layout key={toDo.id}>
+                        <lightning-layout-item size="9" >
+                            <lightning-input type="text" label="Todo Item" variant="label-hidden"
+                        value={toDo.Description__c} data-todo-name={toDo.Id}></lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1">
+                            <lightning-button-icon icon-name="utility:check" alternative-text="complete" title="completed" onclick={handleEdit} data-todo-id={toDo.Id} data-operation="finish"></lightning-button-icon>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1">
+                            <lightning-button-icon icon-name="utility:edit" alternative-text="edit" title="edit" onclick={handleEdit} data-todo-id={toDo.Id} data-operation="update"></lightning-button-icon>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="1">
+                            <lightning-button-icon icon-name="utility:delete" alternative-text="delete" title="delete" onclick={handleEdit} data-todo-id={toDo.Id} data-operation="delete"></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>
